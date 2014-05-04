@@ -1,0 +1,83 @@
+%s : single ( contains a value to return )
+%n : numbers
+%l : statements
+%a : all types ( contains %s , %l )
+%o : operators
+%v : explaination below ( %s contains %v )
+
+-----------------------------
+-----------------------------
+SINGLE
+-----------------------------
+-----------------------------
+%s is a group of :
+   - a pure variable name
+    ex: [[ a ]]
+   - a constant
+    ex: [[ ~const ]] , [[ ~true ]] , [[ ~false ]] , [[ ~null ]]
+   - an iterator element
+    ex: [[ a.element ]] , [[ o:property ]]
+   - a class' static property
+    ex: [[ class::static ]]
+   - a class' constant
+    ex: [[ class~const ]]
+   - a filter with variables
+    ex: [[ filter(%a) ]]
+   - a function or method with variables
+    ex: [[ function:name(%a) ]] , [[ class::method(%a) ]] , [[ object:method(%a) ]]
+   - number
+   - string "..." / '...'
+
+%v is a group of:
+   - a pure variable name
+    ex: [[ a ]]
+   - an iterator element
+    ex: [[ a.element ]] , [[ o:property ]]
+   - a class' static property
+    ex: [[ class::static ]]
+
+-----------------------------
+-----------------------------
+STATEMENTS:
+-----------------------------
+-----------------------------
+%l  is a string with statements separated by comma
+    a statement contains : %v %o %a
+    
+    ex : [@ a to 3 @] , [@ b to a as c @] , [@ b to md5{a} as c @]
+
+-----------------------------
+-----------------------------
+SYNTAX:
+-----------------------------
+-----------------------------
+[[ %a ]] // output style
+
+[@ %l @]
+
+#each
+[@ each %s as %v @]
+[@ each %s as %v to %v @]
+
+#in
+[@ in %s @] //%s value should be a number
+
+#if else
+[@ if %a @]
+[@ else %a @]
+[@ else @]
+
+#value,type
+[@ value %s ? %a @]
+[@ type %s ? %a @]
+[@ ? %a @]
+[@ default @]
+
+#end
+[@ end @] // needed to end a syntax block [@ ... @] ,but not for [@raw @] and [@ extends @]
+------------------------------
+------------------------------
+EXTENDS
+------------------------------
+------------------------------
+[@ extends ... @]
