@@ -220,25 +220,25 @@ class titanbox_template{
         ###################
         // raw php
         $contents = preg_replace("/\[\@raw\ ([^\[\@\]]+)\ \@\]/","<?php $1 ?>",$contents);
-        // each %s as %v to %v
+        // each %s as %v ( variable ) to %v ( variable )
         $contents = preg_replace_callback("/\[\@\ each\ ([^\[\@\]]+)\ as\ ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\ to\ ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\ \@\]/",function($m){
                 return "<?php foreach(".$this->parse_s($m[1])." as $".$m[2]." => $".$m[3]."){ ?>";
             },$contents
         );
-        // each %s as %v
+        // each %s as %v ( variable )
         $contents = preg_replace_callback("/\[\@\ each\ ([^\[\@\]]+)\ as\ ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\ \@\]/",function($m){
                 return "<?php foreach(".$this->parse_s($m[1])." as $".$m[2]."){ ?>";
             },$contents
         );
-        // in %v
-        // @param $ttsv titanbox_template_static_var - a static variable used for template rendering
-        $contents = preg_replace_callback("/\[\@\ in\ ([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)\ \@\]/",function($m){
-                return "<?php for(\$ttsv = 0 ; \$ttsv < $".$m[1]." ; \$ttsv++){ ?>";
-            },$contents
-        );
         // in %n
+        // @param $ttsv titanbox_template_static_var - a static variable used for template rendering
         $contents = preg_replace_callback("/\[\@\ in\ ([\d]+)\ \@\]/",function($m){
                 return "<?php for(\$ttsv = 0 ; \$ttsv < ".$m[1]." ; \$ttsv++){ ?>";
+            },$contents
+        );
+        // in %v
+        $contents = preg_replace_callback("/\[\@\ in\ ([^\[\@\]]+)\ \@\]/",function($m){
+                return "<?php for(\$ttsv = 0 ; \$ttsv < ".$this->parse_v($m[1])." ; \$ttsv++){ ?>";
             },$contents
         );
         // if %a

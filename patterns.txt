@@ -56,11 +56,11 @@ SYNTAX:
 [@ %l @]
 
 #each
-[@ each %s as %v @]
-[@ each %s as %v to %v @]
+[@ each %s as %v ( variable name ) @]
+[@ each %s as %v ( variable name ) to %v ( variable name ) @]
 
 #in
-[@ in %s @] //%s value should be a number
+[@ in %v @] //%v value should be a number
 
 #if else
 [@ if %a @]
